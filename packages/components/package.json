@@ -1,0 +1,27 @@
+{
+  "name": "@martin/components",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.0.0",
+    "lucide-vue-next": "^0.400.0",
+    "radix-vue": "^1.0.0",
+    "tailwind-merge": "^2.0.0"
+  },
+  "devDependencies": {
+    "@martin/tsconfig": "workspace:*",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.0.0",
+    "vue": "^3.5.0",
+    "vue-tsc": "^2.0.0"
+  },
+  "peerDependencies": {
+    "vue": "^3.5.0"
+  }
+}
