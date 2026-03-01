@@ -1,0 +1,19 @@
+{
+  "name": "@martin/common",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@tanstack/store": "^0.7.0",
+    "@tanstack/vue-store": "^0.7.0"
+  },
+  "devDependencies": {
+    "@martin/tsconfig": "workspace:*",
+    "typescript": "^5.0.0",
+    "vitest": "^3.0.0"
+  }
+}

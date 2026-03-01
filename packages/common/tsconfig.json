@@ -1,0 +1,7 @@
+{
+  "extends": "@martin/tsconfig/base",
+  "compilerOptions": {
+    "baseUrl": "."
+  },
+  "include": ["src/**/*"]
+}
