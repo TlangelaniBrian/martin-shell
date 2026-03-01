@@ -1,0 +1,13 @@
+{
+  "name": "@martin/shell-workspace",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --parallel --recursive dev",
+    "build": "pnpm --parallel --recursive build",
+    "lint": "pnpm --recursive --parallel --no-bail lint",
+    "type-check": "pnpm --recursive --parallel --no-bail type-check",
+    "test": "pnpm --recursive --parallel --no-bail test"
+  },
+  "packageManager": "pnpm@10.26.2"
+}
