@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "@martin/tsconfig": "workspace:*",
+    "jsdom": "^28.1.0",
     "typescript": "^5.0.0",
     "vitest": "^3.0.0"
   }
