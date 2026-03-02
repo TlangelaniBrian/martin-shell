@@ -1,10 +1,13 @@
 import { Store } from '@tanstack/store'
 import { useStore } from '@tanstack/vue-store'
 
+export type UserRole = 'member' | 'admin'
+
 export interface User {
   id: string
   email: string
   is_verified: boolean
+  role: UserRole
 }
 
 interface AuthState {
