@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { authStore } from '@martin/common'
+import { authStore, authReady } from '@martin/common'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -28,15 +28,11 @@ const router = createRouter({
 const PROTECTED = ['/search', '/workspace']
 const PUBLIC_ONLY = ['/sign-in', '/sign-up']
 
-router.beforeEach((to, from, next) => {
-  const { user, loading } = authStore.state
-  const path = to.path
+router.beforeEach(async (to, _from, next) => {
+  await authReady
 
-  if (loading) {
-    // still initializing; allow
-    next()
-    return
-  }
+  const { user } = authStore.state
+  const path = to.path
 
   if (!user && PROTECTED.some((p) => path.startsWith(p))) {
     next('/sign-in')

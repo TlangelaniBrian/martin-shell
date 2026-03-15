@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { reactive, ref } from "vue";
 import { useAuth } from "./useAuth.js";
-import { Card } from "@martin/components";
-import { Input } from "@martin/components";
-import { Button } from "@martin/components";
+import { isApiError } from "@martin/common";
+import { Card, Input, Button } from "@martin/components";
 
 const { signUp } = useAuth();
 const form = reactive({ email: "", password: "" });
@@ -17,8 +16,8 @@ async function onSubmit() {
   try {
     await signUp(form.email, form.password);
     submitted.value = true;
-  } catch (err: any) {
-    error.value = err?.detail ?? "Registration failed";
+  } catch (err: unknown) {
+    error.value = isApiError(err) ? err.detail : "Registration failed";
   } finally {
     submitting.value = false;
   }

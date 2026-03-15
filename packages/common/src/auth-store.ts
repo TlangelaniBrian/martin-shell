@@ -20,12 +20,19 @@ export const authStore = new Store<AuthState>({
   loading: true,
 })
 
+let _resolveAuthReady: () => void
+export const authReady = new Promise<void>((resolve) => {
+  _resolveAuthReady = resolve
+})
+
 export function setUser(user: User): void {
   authStore.setState(() => ({ user, loading: false }))
+  _resolveAuthReady()
 }
 
 export function clearUser(): void {
   authStore.setState(() => ({ user: null, loading: false }))
+  _resolveAuthReady()
 }
 
 export function setLoading(loading: boolean): void {
