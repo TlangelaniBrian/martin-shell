@@ -67,4 +67,18 @@ describe('useAuth', () => {
         expect(authStore.state.user).toBeNull()
         expect(mockPush).toHaveBeenCalledWith('/sign-in')
     })
+
+    it('forgotPassword: calls /auth/forgot-password with email', async () => {
+        const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(
+            new Response(null, { status: 202 })
+        )
+        const { useAuth } = await import('../useAuth.js')
+        const { forgotPassword } = useAuth()
+        await forgotPassword('a@b.com')
+        expect(fetchSpy).toHaveBeenCalledWith(
+            expect.stringContaining('/auth/forgot-password'),
+            expect.objectContaining({ method: 'POST' })
+        )
+        fetchSpy.mockRestore()
+    })
 })

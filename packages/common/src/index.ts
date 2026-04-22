@@ -1,6 +1,7 @@
 export * from './types/search.js'
 export * from './types/briefcase.js'
 export * from './types/document.js'
+export * from './types/ai-settings.js'
 export { apiFetch, isApiError } from './api.js'
 export { authStore, authReady, setUser, clearUser, setLoading, useAuthStore } from './auth-store.js'
 export type { ApiError } from './api.js'

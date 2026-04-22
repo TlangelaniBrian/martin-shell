@@ -18,15 +18,38 @@ const router = createRouter({
       component: () => import('./auth/SignUpPage.vue'),
     },
     {
+      path: '/auth/callback/google',
+      component: () => import('./auth/OAuthCallbackPage.vue'),
+    },
+    {
+      path: '/auth/forgot-password',
+      component: () => import('./auth/ForgotPasswordPage.vue'),
+    },
+    {
+      path: '/auth/verify',
+      component: () => import('./auth/VerifyPage.vue'),
+    },
+    {
+      path: '/account',
+      component: () => import('./account/AccountPage.vue'),
+    },
+    {
+      path: '/briefcases',
+      component: () => import('./briefcases/BriefcasesPage.vue'),
+    },
+    {
+      path: '/briefcases/:id',
+      component: () => import('./briefcases/BriefcaseWorkspacePage.vue'),
+    },
+    {
       path: '/workspace/:pathMatch(.*)*',
       component: () => import('./workspace-host.vue'),
     },
   ],
 })
 
-// navigation guard
-const PROTECTED = ['/search', '/workspace']
-const PUBLIC_ONLY = ['/sign-in', '/sign-up']
+const PROTECTED = ['/search', '/workspace', '/briefcases', '/account']
+const PUBLIC_ONLY = ['/sign-in', '/sign-up', '/auth/']
 
 router.beforeEach(async (to, _from, next) => {
   await authReady
@@ -39,7 +62,7 @@ router.beforeEach(async (to, _from, next) => {
     return
   }
 
-  if (user && PUBLIC_ONLY.includes(path)) {
+  if (user && PUBLIC_ONLY.some((p) => path.startsWith(p))) {
     next('/')
     return
   }

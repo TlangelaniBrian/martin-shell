@@ -1,23 +1,24 @@
 <script setup lang="ts">
-import { reactive, ref } from "vue";
-import { useAuth } from "./useAuth.js";
-import { isApiError } from "@martin/common";
-import { Card, Input, Button } from "@martin/components";
+import { reactive, ref } from 'vue'
+import { RouterLink } from 'vue-router'
+import { useAuth } from './useAuth.js'
+import { isApiError } from '@martin/common'
+import { Card, Input, Button } from '@martin/components'
 
-const { signIn } = useAuth();
-const form = reactive({ email: "", password: "" });
-const error = ref<string | null>(null);
-const submitting = ref(false);
+const { signIn } = useAuth()
+const form = reactive({ email: '', password: '' })
+const error = ref<string | null>(null)
+const submitting = ref(false)
 
 async function onSubmit() {
-  error.value = null;
-  submitting.value = true;
+  error.value = null
+  submitting.value = true
   try {
-    await signIn(form.email, form.password);
+    await signIn(form.email, form.password)
   } catch (err: unknown) {
-    error.value = isApiError(err) ? err.detail : "Login failed";
+    error.value = isApiError(err) ? err.detail : 'Login failed'
   } finally {
-    submitting.value = false;
+    submitting.value = false
   }
 }
 </script>
@@ -36,6 +37,12 @@ async function onSubmit() {
           />
         </div>
         <div>
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-sm font-medium text-fg">Password</span>
+            <RouterLink to="/auth/forgot-password" class="text-xs text-primary hover:text-primary-hover transition-colors">
+              Forgot password?
+            </RouterLink>
+          </div>
           <Input
             v-model="form.password"
             type="password"

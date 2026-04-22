@@ -51,5 +51,14 @@ export function useAuth() {
         }
     }
 
-    return { bootstrap, signIn, signUp, signOut }
+    async function forgotPassword(email: string): Promise<void> {
+        // fastapi-users returns 202 regardless of whether the email exists (prevents enumeration)
+        await fetch(`${import.meta.env.VITE_API_URL}/auth/forgot-password`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email }),
+        })
+    }
+
+    return { bootstrap, signIn, signUp, signOut, forgotPassword }
 }
