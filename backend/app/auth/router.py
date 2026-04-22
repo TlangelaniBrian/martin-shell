@@ -13,6 +13,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.auth.schemas import UserCreate, UserRead, UserUpdate
 from app.auth.users import auth_backend, fastapi_users, current_active_user
 from app.config import settings
+
+_SECURE = settings.cookie_secure
+_SAMESITE = "none" if _SECURE else "lax"
 from app.database import get_async_session
 from app.models.refresh_token import RefreshToken
 from app.models.user import User
@@ -41,8 +44,8 @@ async def logout(
             db_token.is_revoked = True
             await session.commit()
 
-    response.delete_cookie("access_token", path="/", samesite="none", secure=True, httponly=True)
-    response.delete_cookie("refresh_token", path="/", samesite="none", secure=True, httponly=True)
+    response.delete_cookie("access_token", path="/", samesite=_SAMESITE, secure=_SECURE, httponly=True)
+    response.delete_cookie("refresh_token", path="/", samesite=_SAMESITE, secure=_SECURE, httponly=True)
     return {"detail": "Logged out"}
 
 
@@ -91,11 +94,11 @@ async def refresh(
 
     response.set_cookie(
         "access_token", access_token,
-        max_age=900, httponly=True, secure=True, samesite="none", path="/",
+        max_age=900, httponly=True, secure=_SECURE, samesite=_SAMESITE, path="/",
     )
     response.set_cookie(
         "refresh_token", new_raw,
-        max_age=60 * 60 * 24 * 30, httponly=True, secure=True, samesite="none", path="/",
+        max_age=60 * 60 * 24 * 30, httponly=True, secure=_SECURE, samesite=_SAMESITE, path="/",
     )
     return {"detail": "Tokens refreshed"}
 

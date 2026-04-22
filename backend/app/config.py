@@ -21,6 +21,7 @@ class Settings(BaseSettings):
     r2_access_key_id: str = ""
     r2_secret_access_key: str = ""
     r2_bucket_name: str = ""
+    cookie_secure: bool = False
 
     model_config = {"env_file": str(_ENV_FILE), "env_file_encoding": "utf-8"}
 

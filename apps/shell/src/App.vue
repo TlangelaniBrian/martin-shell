@@ -31,11 +31,32 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div v-if="auth.loading" class="flex h-screen items-center justify-center">
-    <div class="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" />
+  <div v-if="auth.loading" class="app-loading">
+    <div class="app-loading-spinner" />
   </div>
   <template v-else>
     <AppNav v-if="showNav" />
     <RouterView />
   </template>
 </template>
+
+<style>
+.app-loading {
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background: #06080f;
+}
+.app-loading-spinner {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 2px solid #1e2533;
+  border-top-color: #c4a362;
+  animation: app-spin 0.7s linear infinite;
+}
+@keyframes app-spin {
+  to { transform: rotate(360deg); }
+}
+</style>

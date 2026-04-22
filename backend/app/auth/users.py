@@ -71,8 +71,8 @@ class UserManager(UUIDIDMixin, BaseUserManager[User, uuid.UUID]):
             raw_token,
             max_age=60 * 60 * 24 * 30,
             httponly=True,
-            secure=True,
-            samesite="none",
+            secure=settings.cookie_secure,
+            samesite="lax" if not settings.cookie_secure else "none",
             path="/",
         )
 
@@ -83,10 +83,10 @@ async def get_user_manager(user_db=Depends(get_user_db)):
 
 cookie_transport = CookieTransport(
     cookie_name="access_token",
-    cookie_max_age=900,      # 15 minutes
+    cookie_max_age=900,
     cookie_httponly=True,
-    cookie_secure=True,
-    cookie_samesite="none",
+    cookie_secure=settings.cookie_secure,
+    cookie_samesite="lax" if not settings.cookie_secure else "none",
 )
 
 

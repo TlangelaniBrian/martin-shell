@@ -4,7 +4,7 @@ import { pluginVue } from '@rsbuild/plugin-vue'
 
 export default defineConfig({
   html: { title: 'Martin', template: './index.html' },
-  source: { entry: { index: './src/main.ts' } },
+  source: { entry: { index: './src/main.ts' }, envPrefix: ['PUBLIC_', 'VITE_'] },
   dev: { lazyCompilation: false },
   plugins: [
     pluginVue(),
