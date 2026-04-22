@@ -1,14 +1,18 @@
 <script setup lang="ts">
-import { FileText, ExternalLink, Sparkles, Building2, Calendar } from 'lucide-vue-next'
+import { ref } from 'vue'
+import { FileText, ExternalLink, Sparkles, Building2, Calendar, ChevronDown } from 'lucide-vue-next'
 import type { CaseData } from '@martin/common'
 import { courtLabel } from './courts.js'
 import SaveToBriefcaseButton from './SaveToBriefcaseButton.vue'
+import CaseChatPanel from './CaseChatPanel.vue'
 
 defineProps<{ case_: CaseData }>()
+const chatOpen = ref(false)
 </script>
 
 <template>
   <div class="h-full flex flex-col overflow-hidden">
+    <!-- Case metadata (scrollable) -->
     <div class="flex-1 overflow-y-auto p-6">
       <h2 class="text-xl font-semibold text-fg leading-snug mb-3">{{ case_.case_name }}</h2>
 
@@ -56,24 +60,27 @@ defineProps<{ case_: CaseData }>()
       </div>
     </div>
 
+    <!-- AI Analysis section -->
     <div class="border-t border-border bg-bg-subtle">
-      <div class="px-6 py-3 flex items-center border-b border-border">
+      <!-- Toggle header -->
+      <button
+        class="w-full px-6 py-3 flex items-center justify-between border-b border-border hover:bg-bg transition"
+        @click="chatOpen = !chatOpen"
+      >
         <span class="flex items-center gap-1.5 text-xs font-medium text-fg">
           <Sparkles :size="13" class="text-primary" />
           AI Analysis
         </span>
-      </div>
-      <div class="px-6 py-5 space-y-3">
-        <p class="text-sm text-fg-muted leading-relaxed">
-          Ask AI to summarise this case, identify relevant precedents, or help build an argument around it.
-        </p>
-        <button
-          disabled
-          title="AI chat coming soon"
-          class="px-4 py-2 rounded-md text-sm font-medium bg-primary/10 text-primary border border-primary/20 opacity-60 cursor-not-allowed"
-        >
-          Ask about this case
-        </button>
+        <ChevronDown
+          :size="14"
+          class="text-fg-muted transition-transform duration-200"
+          :class="{ 'rotate-180': chatOpen }"
+        />
+      </button>
+
+      <!-- Chat panel — fixed height when open -->
+      <div v-if="chatOpen" class="h-72">
+        <CaseChatPanel :case-id="case_.id" />
       </div>
     </div>
   </div>
