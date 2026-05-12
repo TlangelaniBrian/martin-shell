@@ -9,7 +9,7 @@ export function isApiError(err: unknown): err is ApiError {
   )
 }
 
-let API_URL = typeof import.meta !== 'undefined' ? (import.meta.env?.VITE_API_URL as string) : ''
+let API_URL = ''
 
 export function configureApi(baseUrl: string): void {
   API_URL = baseUrl

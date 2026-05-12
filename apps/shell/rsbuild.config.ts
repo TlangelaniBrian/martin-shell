@@ -1,10 +1,17 @@
 import { pluginModuleFederation } from '@module-federation/rsbuild-plugin'
-import { defineConfig } from '@rsbuild/core'
+import { defineConfig, loadEnv } from '@rsbuild/core'
 import { pluginVue } from '@rsbuild/plugin-vue'
+
+const { parsed } = loadEnv({ prefixes: ['VITE_', 'PUBLIC_'] })
 
 export default defineConfig({
   html: { title: 'Martin', template: './index.html' },
-  source: { entry: { index: './src/main.ts' }, envPrefix: ['PUBLIC_', 'VITE_'] },
+  source: {
+    entry: { index: './src/main.ts' },
+    define: {
+      'import.meta.env.VITE_API_URL': JSON.stringify(parsed.VITE_API_URL ?? ''),
+    },
+  },
   dev: { lazyCompilation: false },
   plugins: [
     pluginVue(),
