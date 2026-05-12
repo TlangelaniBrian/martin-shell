@@ -13,6 +13,16 @@ export default defineConfig({
     },
   },
   dev: { lazyCompilation: false },
+  server: {
+    proxy: {
+      '/auth': { target: 'http://127.0.0.1:8000', changeOrigin: true },
+      '/users': { target: 'http://127.0.0.1:8000', changeOrigin: true },
+      '/cases': { target: 'http://127.0.0.1:8000', changeOrigin: true },
+      '/search': { target: 'http://127.0.0.1:8000', changeOrigin: true },
+      '/briefcases': { target: 'http://127.0.0.1:8000', changeOrigin: true },
+      '/health': { target: 'http://127.0.0.1:8000', changeOrigin: true },
+    },
+  },
   plugins: [
     pluginVue(),
     pluginModuleFederation({
