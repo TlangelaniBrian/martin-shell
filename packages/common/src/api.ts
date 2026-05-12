@@ -59,6 +59,9 @@ async function _apiFetch<T>(path: string, options: RequestInit, retry: boolean):
     throw { status: res.status, detail: error.detail } satisfies ApiError
   }
 
+  if (res.status === 204 || res.headers.get('content-length') === '0') {
+    return undefined as T
+  }
   return res.json() as Promise<T>
 }
 
