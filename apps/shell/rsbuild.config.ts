@@ -32,9 +32,9 @@ export default defineConfig({
       },
       dts: false,
       shared: {
-        vue: { singleton: true, eager: true },
-        'vue-router': { singleton: true, eager: true },
-        '@tanstack/vue-query': { singleton: true, eager: true },
+        vue: { singleton: true, eager: true, requiredVersion: '^3.5.0' },
+        'vue-router': { singleton: true, eager: true, requiredVersion: '^4.0.0' },
+        '@tanstack/vue-query': { singleton: true, eager: true, requiredVersion: '^5.0.0' },
       },
     }),
   ],
