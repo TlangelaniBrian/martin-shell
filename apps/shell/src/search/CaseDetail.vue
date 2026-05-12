@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { RouterLink } from 'vue-router'
 import { FileText, ExternalLink, Sparkles, Building2, Calendar, ChevronDown } from 'lucide-vue-next'
 import type { CaseData } from '@martin/common'
 import { courtLabel } from './courts.js'
@@ -37,7 +38,13 @@ const chatOpen = ref(false)
         <p class="text-sm text-fg leading-relaxed whitespace-pre-line">{{ case_.summary }}</p>
       </div>
 
-      <div class="flex gap-4">
+      <div class="flex gap-4 flex-wrap">
+        <RouterLink
+          :to="`/workspace/cases/${case_.id}`"
+          class="open-workspace-btn"
+        >
+          Open in Workspace
+        </RouterLink>
         <a
           v-if="case_.pdf_url"
           :href="case_.pdf_url"
@@ -60,7 +67,6 @@ const chatOpen = ref(false)
       </div>
     </div>
 
-    <!-- AI Analysis section -->
     <div class="border-t border-border bg-bg-subtle">
       <!-- Toggle header -->
       <button
@@ -85,3 +91,19 @@ const chatOpen = ref(false)
     </div>
   </div>
 </template>
+
+<style scoped>
+.open-workspace-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  color: var(--fg);
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.open-workspace-btn:hover { background: var(--bg-subtle); }
+</style>
