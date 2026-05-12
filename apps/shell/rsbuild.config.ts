@@ -17,6 +17,7 @@ export default defineConfig({
       shared: {
         vue: { singleton: true, eager: true },
         'vue-router': { singleton: true, eager: true },
+        '@tanstack/vue-query': { singleton: true, eager: true },
       },
     }),
   ],
