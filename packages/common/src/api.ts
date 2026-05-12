@@ -9,7 +9,11 @@ export function isApiError(err: unknown): err is ApiError {
   )
 }
 
-const API_URL = import.meta.env.VITE_API_URL as string
+let API_URL = typeof import.meta !== 'undefined' ? (import.meta.env?.VITE_API_URL as string) : ''
+
+export function configureApi(baseUrl: string): void {
+  API_URL = baseUrl
+}
 
 let refreshPromise: Promise<boolean> | null = null
 
