@@ -1,4 +1,4 @@
-import { apiFetch, clearUser, setUser, setLoading } from '@martin/common'
+import { apiFetch, isApiError, clearUser, setUser, setLoading } from '@martin/common'
 import type { User } from '@martin/common'
 import { useRouter } from 'vue-router'
 
@@ -14,8 +14,13 @@ export function useAuth() {
         try {
             const user = await apiFetch<User>(ME_URL)
             setUser(user)
-        } catch {
-            clearUser()
+        } catch (err) {
+            if (isApiError(err) && (err.status === 401 || err.status === 403)) {
+                clearUser()
+            } else {
+                clearUser()
+                throw err
+            }
         }
     }
 
